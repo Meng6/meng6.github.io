@@ -4,10 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>This is our example webpage.</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.25.0/build/vega.min.js" integrity="sha256-na2uPt+tUPV7GRVpc+/ezQj+lGwljIvOJifkmg8f3as=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.15.0/build/vega-lite.min.js" integrity="sha256-WLAn82Ut4GptY/IJf4K/1i+R8ibAkVLFhBVkOovqCK8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.2/build/vega-embed.min.js" integrity="sha256-GfFZ6w7V/y3Ws9eHVsOXZ/F1ZFroThVZraOAx3HAt6s=" crossorigin="anonymous"></script>
 </head>
 <body>
     <p>
-        This is an example paragraph. You can do things like <strong>Strongly</strong> emphasized. You can also <em>emphasize</em> text.
+        This is an example paragraph. You can do things like <strong>Strongly</strong> emphasized. 
+        You can also <em>emphasize</em> text.
     </p>
+    <div id="viz"></div>
+    <script>
+        var vlSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "data": {"url": "https://vega.github.io/editor/data/movies.json"},
+            "params": [{"name": "myfirstparam", "select": "interval"}],
+            "hconcat": [
+                {
+                    "mark": "bar",
+                    "encoding": {
+                        "x": {"field": "IMDB Rating", "type": "quantitative", "bin": true},
+                        "y": {"aggregate": "mean", "field": "US Gross"}
+                    }
+                },
+                {
+                    "mark": "point",
+                    "encoding": {
+                        "x": {"field": "US Gross", "type": "quantitative"},
+                        "y": {"field": "Worldwide Gross", "type": "quantitative"},
+                        "color": {"value": "grey", "condition": {"param": "myfirstparam"}}
+                    }
+                }
+            ]
+        }
+        vegaEmbed("#viz", vlSpec)
+    </script>
 </body>
 </html>
