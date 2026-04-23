@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meng Li</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #222;
+    background: #fff;
+    line-height: 1.6;
+    font-size: 15px;
+  }
+  a { color: #0d9488; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .container {
+    max-width: 92vw;
+    margin: 0 auto;
+    padding: 0 0.6vw;
+  }
+
+  /* Header */
+  header { padding: 3.9vw 0 0; }
+  .header-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 2.8vw;
+  }
+  .header-info { flex: 1; }
+  /* .header-photo { flex: 0 0 9vw; }
+  .header-photo img {
+    width: 9vw;
+    height: 9vw;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .photo-placeholder {
+    width: 9vw;
+    height: 9vw;
+    border-radius: 50%;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    font-size: 2.8rem;
+  } */
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 0.35vw;
+  }
+  header .subtitle {
+    font-size: 0.93rem;
+    color: #555;
+    margin-bottom: 0.2vw;
+  }
+  .header-links {
+    margin-top: 1vw;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5vw;
+  }
+  .header-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35vw;
+    padding: 0.35vw 0.8vw;
+    background: #f3f4f6;
+    border-radius: 1.4vw;
+    font-size: 0.84rem;
+    color: #333;
+  }
+  .header-links a:hover { background: #e5e7eb; text-decoration: none; }
+
+  /* Main */
+  main { padding-bottom: 5.5vw; }
+
+  /* Sections */
+  section { margin-top: 3vw; }
+  section h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 1vw;
+    padding-bottom: 0.4vw;
+    border-bottom: 2px solid #e5e7eb;
+  }
+
+  /* About */
+  .about p {
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 0.7vw;
+  }
+  .research-keywords { margin-top: 0.7vw; }
+  .research-keywords span {
+    display: inline-block;
+    background: #f0fdf9;
+    color: #0d7d72;
+    border: 1px solid #99f6e4;
+    padding: 0.2vw 0.7vw;
+    border-radius: 1.4vw;
+    font-size: 0.81rem;
+    margin: 0.2vw 0.3vw 0.2vw 0;
+  }
+
+  /* News */
+  .news-scroll {
+    max-height: 18vw;
+    overflow-y: auto;
+    padding: 0.3vw 0.8vw;
+  }
+  .news-list { list-style: none; }
+  .news-list li {
+    padding: 0.6vw 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 0.92rem;
+    display: flex;
+    gap: 0.8vw;
+  }
+  .news-list li:last-child { border-bottom: none; }
+  .news-date {
+    flex: 0 0 3.2vw;
+    color: #999;
+    font-size: 0.84rem;
+  }
+
+  /* Shared button links */
+  .btn-links { display: flex; flex-wrap: wrap; gap: 0.35vw; margin-top: 0.5vw; }
+  .btn-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3vw;
+    padding: 0.2vw 0.6vw;
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 0.3vw;
+    font-size: 0.81rem;
+    color: #444;
+  }
+  .btn-links a:hover { background: #e5e7eb; text-decoration: none; }
+
+  /* Projects */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.7vw;
+  }
+  .project {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.8vw;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+  .project:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0.6vw 1.7vw rgba(0,0,0,0.12);
+  }
+  .project-thumb {
+    width: 100%;
+    aspect-ratio: 5 / 4;
+    overflow: hidden;
+    background: none;
+  }
+  .project-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    padding: 0 0.6vw;
+  }
+  .project-thumb.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #fff;
+  }
+  .project-body {
+    width: 100%;
+    padding: 1vw 1.1vw 1.1vw;
+    flex: 1;
+  }
+  .project-body h3 {
+    font-size: 0.98rem;
+    color: #111;
+    margin-bottom: 0.3vw;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 0.71rem;
+    background: #f0fdf9;
+    color: #0f766e;
+    border: 1px solid #99f6e4;
+    padding: 0.07vw 0.5vw;
+    border-radius: 0.7vw;
+    font-weight: 500;
+    white-space: nowrap;
+    margin-left: 0.3em;
+    vertical-align: middle;
+  }
+  .project-body p {
+    font-size: 0.89rem;
+    color: #555;
+    margin-bottom: 0.15vw;
+    line-height: 1.5;
+  }
+
+  /* Selected Publications */
+  .pub-authors { color: #666; font-size: 0.87rem; margin: 0.15vw 0; }
+  .pub-authors strong { color: #111; }
+  .pub-venue { color: #0d9488; font-weight: 500; font-size: 0.87rem; white-space: nowrap; }
+
+  /* Footer */
+  footer {
+    padding: 1.7vw 2.2vw;
+    text-align: center;
+    font-size: 0.79rem;
+    color: #bbb;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.7vw;
+  }
+  .modal-overlay.active {
+    display: flex;
+  }
+  .modal-box {
+    background: #fff;
+    border-radius: 1vw;
+    overflow: hidden;
+    max-width: 80vw;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 1.4vw 4vw rgba(0,0,0,0.3);
+    animation: modalIn 0.2s ease;
+  }
+  @keyframes modalIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+  }
+  .modal-thumb {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #fff !important;
+  }
+  .modal-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0 1.1vw;
+  }
+  .modal-thumb.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+  .modal-body {
+    padding: 1.7vw 1.9vw 1.9vw;
+    background: #f3f4f6;
+  }
+  .modal-body h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 0.6vw;
+  }
+  .modal-body h3 .tag {
+    font-size: 0.85rem;
+  }
+  .modal-close {
+    position: absolute;
+    top: 1.1vw;
+    right: 1.4vw;
+    font-size: 1.5rem;
+    color: #fff;
+    cursor: pointer;
+    background: none;
+    border: none;
+    line-height: 1;
+  }
+  .modal-close:hover { color: #ddd; }
+
+  @media (max-width: 700px) {
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <div class="header-inner">
+    <div class="header-info">
+      <h1>Meng Li</h1>
+      <div class="subtitle">PhD Student, Information Sciences</div>
+      <div class="subtitle">University of Illinois Urbana-Champaign</div>
+      <div class="header-links">
+        <a href="https://scholar.google.com/citations?user=FQBFOGIAAAAJ"><i class="fas fa-graduation-cap"></i> Google Scholar</a>
+        <a href="https://github.com/meng6"><i class="fab fa-github"></i> GitHub</a>
+        <a href="https://www.linkedin.com/in/meng-l-57238414a"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      </div>
+    </div>
+    <!-- <div class="header-photo">
+      <img src="figs/me.jpg">
+      <div class="photo-placeholder"><i class="fas fa-user"></i></div>
+    </div> -->
+  </div>
+</header>
+
+<main>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <h2>About</h2>
+    <p>
+      I am a PhD student co-advised by
+      <a href="https://ischool.illinois.edu/people/bertram-ludascher">Dr. Bertram Ludäscher</a> and
+      <a href="https://ischool.illinois.edu/people/timothy-mcphillips">Dr. Timothy McPhillips</a>
+      in the School of Information Sciences at the University of Illinois Urbana-Champaign.
+      My research focuses on <strong>LLMs for code</strong> and <strong>reasoning with LLMs</strong>,
+      particularly neuro-symbolic approaches that make AI systems more explainable and debuggable.
+    </p>
+    <p>
+      Previously, I worked at the Mobile Sensing + Health Institute (MoSHI) at the UPMC Hillman Cancer Center for 3+ years for 3+ years, where I led the data 
+      science team on projects using smartphone and wearable sensor data to predict mental and physical health in a variety of clinical and community samples.
+    </p>
+    <div class="research-keywords">
+      <span>LLMs for Code</span>
+      <span>Reasoning with LLMs</span>
+      <span>Neuro-Symbolic AI</span>
+      <span>Agentic AI</span>
+      <span>Knowledge Graphs</span>
+      <span>Reproducible Workflows</span>
+      <span>Mobile Health</span>
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <section>
+    <h2>Latest News</h2>
+    <div class="news-scroll">
+      <ul class="news-list">
+        <li>
+          <span class="news-date">2025/07</span>
+          <span>First-author paper on LLM-assisted code analysis for Python notebooks accepted at <a href="https://colmweb.org/2025"><strong>COLM 2025</strong></a> (acceptance rate: 32%)</span>
+        </li>
+        <li>
+          <span class="news-date">2024/07</span>
+          <span>Presented poster on <strong>Geist</strong>, a new templating language for data transformation, querying, and report generation, at <a href="https://www.scipy2024.scipy.org"><strong>SciPy 2024</strong></a></span>
+        </li>
+        <li>
+          <span class="news-date">2024/04</span>
+          <span>Awarded the <strong>SciPy 2024 Financial Aid Scholarship</strong></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SELECTED PUBLICATIONS -->
+  <section>
+    <h2>Selected Publications <span style="font-size:0.82rem; font-weight:400; color:#666;">— full list on <a href="https://scholar.google.com/citations?user=FQBFOGIAAAAJ">Google Scholar</a></span></h2>
+  <div class="projects-grid">
+
+    <div class="project">
+      <div class="project-thumb">
+        <img src="figs/crabs.svg" alt="CRABS overview" style="object-fit: contain; padding: 12px 12px;">
+      </div>
+      <div class="project-body">
+        <h3>Capture and Resolve Assisted Bounding Strategy (CRABS) <span class="tag">COLM 2025</span></h3>
+        <div class="pub-authors"><strong>Li, M.</strong>, McPhillips, T. M., Wang, D., Tsai, S., Ludäscher, B.</div>
+        <p>CRABS introduces a pincer strategy for extracting inter-cell information flows from Python notebooks: syntactic analysis constrains both the workload given to the LLM and the responses it can generate. By bounding the problem from both sides, CRABS overcomes long-context challenges, curbs hallucinations, and achieves higher accuracy than the baseline, LLM-only method.</p>
+        <div class="btn-links">
+          <a href="https://openreview.net/pdf?id=CB3CeOWo0J"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/CIRSS/crabs"><i class="fab fa-github"></i> Code</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-thumb">
+        <img src="figs/geist.svg" alt="Geist overview">
+      </div>
+      <div class="project-body">
+        <h3>Geist: A Multimodal Data Transformation, Query, and Reporting Language <span class="tag">SciPy 2024</span></h3>
+        <div class="pub-authors"><strong>Li, M.</strong>, McPhillips, T. M., &amp; Ludäscher, B.</div>
+
+        <p>A templating language for declarative data manipulation, query, and report generation, with the aim of enabling developers to use any query language or tool regardless of where the data is stored.</p>
+        <div class="btn-links">
+          <a href="https://cirss.github.io/geist-p/0.2/SciPy2024Poster.pdf"><i class="fas fa-image"></i> Poster</a>
+          <a href="https://github.com/CIRSS/geist-p"><i class="fab fa-github"></i> Code</a>
+          <a href="https://cirss.github.io/geist-p"><i class="fas fa-globe"></i> Website</a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="project">
+      <div class="project-thumb">
+        <img src="figs/rapids.webp" alt="RAPIDS overview">
+      </div>
+      <div class="project-body">
+        <h3>Reproducible Analysis Pipeline for Data Streams (RAPIDS) <span class="tag">Frontiers in Digital Health 2021</span></h3>
+        <div class="pub-authors">Vega, J., <strong>Li, M.</strong>, Aguillera, K., Goel, N., Joshi, E., Khandekar, K., Durica, K. C., Kunta, A. R., &amp; Low, C. A.</div>
+
+        <p>An open-source pipeline for processing smartphone and wearable sensor data with 300+ behavioral features, reproducible workflows, and parallel execution, adopted by research teams worldwide.</p>
+        <div class="btn-links">
+          <a href="https://www.frontiersin.org/journals/digital-health/articles/10.3389/fdgth.2021.769823"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/carissalow/rapids"><i class="fab fa-github"></i> Code</a>
+          <a href="https://rapids.science"><i class="fas fa-globe"></i> Website</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-thumb">
+        <img src="figs/rhythms.png" alt="Rhythms overview" style="object-fit: contain; padding: 0;">
+      </div>
+      <div class="project-body">
+        <h3>Digital Biomarkers of Symptom Burden Self-Reported by Perioperative Patients Undergoing Pancreatic Surgery <span class="tag">JMIR Cancer 2021</span></h3>
+        <div class="pub-authors">Low, C. A., <strong>Li, M.</strong>, Vega, J., Durica, K. C., Ferreira, D., Tam, V., Hogg, M., Iii, H. Z., Doryab, A., &amp; Dey, A. K.</div>
+
+        <p>Next-day symptom burden prediction for pancreatic cancer patients using smartphone and Fitbit data.</p>
+        <div class="btn-links">
+          <a href="https://cancer.jmir.org/2021/2/e27975"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/carissalow/rhythms-population"><i class="fab fa-github"></i> Code</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </section>
+
+</main>
+</div>
+
+<footer>
+  &copy; 2026 Meng Li
+</footer>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <button class="modal-close" onclick="closeModalDirect()">&times;</button>
+  <div class="modal-box">
+    <div class="modal-thumb" id="modal-thumb"></div>
+    <div class="modal-body">
+      <h3 id="modal-title"></h3>
+      <div id="modal-authors" class="pub-authors" style="margin-bottom:4px;"></div>
+      <div id="modal-desc" style="font-size:0.93rem;color:#444;margin-bottom:10px;"></div>
+      <div id="modal-links" class="btn-links"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.project').forEach(card => {
+    card.addEventListener('click', function(e) {
+      if (e.target.closest('a')) return; // don't trigger on link clicks
+
+      const thumb = card.querySelector('.project-thumb');
+      const modalThumb = document.getElementById('modal-thumb');
+
+      // Copy thumb content (skip placeholder text)
+      modalThumb.innerHTML = thumb.classList.contains('placeholder') ? '' : thumb.innerHTML;
+      modalThumb.className = 'modal-thumb';
+
+      document.getElementById('modal-title').innerHTML = card.querySelector('h3').innerHTML;
+      document.getElementById('modal-authors').innerHTML = card.querySelector('.pub-authors')?.innerHTML || '';
+      document.getElementById('modal-desc').innerHTML = card.querySelector('p')?.innerHTML || '';
+      document.getElementById('modal-links').innerHTML = card.querySelector('.btn-links')?.innerHTML || '';
+
+      document.getElementById('modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeModal(e) {
+    if (e.target === document.getElementById('modal')) closeModalDirect();
+  }
+  function closeModalDirect() {
+    document.getElementById('modal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+</script>
+</body>
+</html>
