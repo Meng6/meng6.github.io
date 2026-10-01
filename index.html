@@ -178,6 +178,15 @@
     display: block;
     padding: 0 0.6vw;
   }
+  .project-thumb iframe {
+    width: 200%;
+    height: 200%;
+    border: 0;
+    display: block;
+    transform: scale(0.5);
+    transform-origin: top left;
+    pointer-events: none;
+  }
   .project-thumb.placeholder {
     display: flex;
     align-items: center;
@@ -271,6 +280,17 @@
     object-fit: contain;
     padding: 0 1.1vw;
   }
+  .modal-thumb.playground {
+    aspect-ratio: auto;
+    height: 70vh;
+    min-height: 480px;
+  }
+  .modal-thumb iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
   .modal-thumb.placeholder {
     display: flex;
     align-items: center;
@@ -344,8 +364,7 @@
       <a href="https://ischool.illinois.edu/people/bertram-ludascher">Dr. Bertram Ludäscher</a> and
       <a href="https://ischool.illinois.edu/people/timothy-mcphillips">Dr. Timothy McPhillips</a>
       in the School of Information Sciences at the University of Illinois Urbana-Champaign.
-      My research focuses on <strong>LLMs for code</strong> and <strong>reasoning with LLMs</strong>,
-      particularly neuro-symbolic approaches that make AI systems more explainable and debuggable.
+      My research focuses on <strong>LLMs for code</strong> and <strong>neuro-symbolic AI</strong>.
     </p>
     <p>
       Previously, I worked at the Mobile Sensing + Health Institute (MoSHI) at the UPMC Hillman Cancer Center for 3+ years, where I led the data 
@@ -353,11 +372,9 @@
     </p>
     <div class="research-keywords">
       <span>LLMs for Code</span>
-      <span>Reasoning with LLMs</span>
       <span>Neuro-Symbolic AI</span>
-      <span>Agentic AI</span>
+      <span>Reasoning with LLMs</span>
       <span>Knowledge Graphs</span>
-      <span>Reproducible Workflows</span>
       <span>Mobile Health</span>
     </div>
   </section>
@@ -368,8 +385,12 @@
     <div class="news-scroll">
       <ul class="news-list">
         <li>
+          <span class="news-date">2026/06</span>
+          <span>First-author demo paper on <strong>computational argumentation for decision support</strong>, accepted at <a href="https://comma2026.vercel.app"><strong>COMMA 2026</strong></a></span>
+        </li>
+        <li>
           <span class="news-date">2025/07</span>
-          <span>First-author paper on LLM-assisted code analysis for Python notebooks accepted at <a href="https://colmweb.org/2025"><strong>COLM 2025</strong></a> (acceptance rate: 32%)</span>
+          <span>First-author paper on <strong>LLM-assisted code analysis for Python notebooks</strong> accepted at <a href="https://colmweb.org/2025"><strong>COLM 2025</strong></a> (acceptance rate: 32%)</span>
         </li>
         <li>
           <span class="news-date">2024/07</span>
@@ -390,6 +411,22 @@
 
     <div class="project">
       <div class="project-thumb">
+        <iframe src="https://xai-ca.github.io/argblazer/playground.html" title="ArgBlazer playground preview" loading="lazy" tabindex="-1"></iframe>
+      </div>
+      <div class="project-body">
+        <h3>ArgBlazer <span class="tag">COMMA 2026</span></h3>
+        <div class="pub-authors"><strong>Li, M.</strong>, McPhillips, T. M., Bowers, S., &amp; Ludäscher, B.</div>
+        <p>An interactive tool for exploring decision landscapes using argumentation frameworks. Key features: step-by-step construction; forward/backward replay of recorded steps; extensions under multiple semantics at each step; decision outcomes under specified criteria, quantifiers, and semantics at each step; shareable URLs (browser) and exportable HTML reports (VS Code extension).</p>
+        <div class="btn-links">
+          <a href="https://ebooks.iospress.nl/doi/10.3233/FAIA260847"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://xai-ca.github.io/argblazer/playground.html"><i class="fas fa-globe"></i> Playground</a>
+          <a href="https://marketplace.visualstudio.com/items?itemName=CIRSS.argblazer"><i class="fas fa-code"></i> VS Code Extension</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-thumb">
         <img src="figs/crabs.svg" alt="CRABS overview" style="object-fit: contain; padding: 12px 12px;">
       </div>
       <div class="project-body">
@@ -399,6 +436,7 @@
         <div class="btn-links">
           <a href="https://openreview.net/pdf?id=CB3CeOWo0J"><i class="fas fa-file-alt"></i> Paper</a>
           <a href="https://github.com/CIRSS/crabs"><i class="fab fa-github"></i> Code</a>
+          <a href="https://youtu.be/RHdbsOwWKkI"><i class="fab fa-youtube"></i> YouTube</a>
         </div>
       </div>
     </div>
@@ -489,6 +527,11 @@
       // Copy thumb content (skip placeholder text)
       modalThumb.innerHTML = thumb.classList.contains('placeholder') ? '' : thumb.innerHTML;
       modalThumb.className = 'modal-thumb';
+      const playground = modalThumb.querySelector('iframe');
+      if (playground) {
+        modalThumb.classList.add('playground');
+        playground.removeAttribute('tabindex');
+      }
 
       document.getElementById('modal-title').innerHTML = card.querySelector('h3').innerHTML;
       document.getElementById('modal-authors').innerHTML = card.querySelector('.pub-authors')?.innerHTML || '';
@@ -505,6 +548,7 @@
   }
   function closeModalDirect() {
     document.getElementById('modal').classList.remove('active');
+    document.getElementById('modal-thumb').replaceChildren();
     document.body.style.overflow = '';
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
